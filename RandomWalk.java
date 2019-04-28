@@ -50,8 +50,8 @@ class RandomWalk extends JFrame implements Runnable {
 
     public void run() {
      	while (true) {
-     		Direction.randomMove(cheetah); // call the movement function to allow for the cheetah to move U, D, L, R
-     		Direction.randomMove(rabbit); // call the movement function to allow for the rabbit to move U, D, L, R
+     		Direction.randomMove(cheetah, false); // call the movement function to allow for the cheetah to move U, D, L, R
+     		Direction.randomMove(rabbit, false); // call the movement function to allow for the rabbit to move U, D, L, R
      		draw(globalGraphics); // draw all the items onto the frame
 
      		try {

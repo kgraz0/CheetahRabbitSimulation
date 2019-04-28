@@ -24,7 +24,7 @@ class Direction {
 	FileWriter fw = null; // set to null for now, but make it global
 	static PrintWriter outputFile;
 
-    public static void moveDirection(Block p) {
+    public static void moveDirection(Block p, boolean isAWalk) {
 
         if (p.getY() < 2) { // check whether the cheetah or the rabbit hit the upper wall
             direction = chooseDirection(2, 3, 4, 6, 7); // set state to only allow direction Down, Left, Right, lower Right, lower Left
@@ -36,47 +36,74 @@ class Direction {
             direction = chooseDirection(1, 2, 4, 5, 6); // set state to only allow direction Up, Down, Right, upper Right, lower Right
         }
 
+        LinkedList<String> ll = new LinkedList<String>(); // create a new Linked List
+
         switch (direction) {
             case Direction.U:
             p.setY(p.getY()-1); // decrease Y position if block is going up
+            ll.add("U");
             break;
             case Direction.D:
             p.setY(p.getY()+1); // increase Y position if block is going up
+            ll.add("D");
             break;
             case Direction.L:
             p.setX(p.getX()-1); // decrease X position if block is going left
+            ll.add("L");
             break;
             case Direction.R:
             p.setX(p.getX()+1); // increase X position if block is going right
+            ll.add("R");
             break;
             case Direction.UR:
             p.setX(p.getX()+1); // increase X position, decrease Y to go upper right
             p.setY(p.getY()-1);
+            ll.add("UR");
             break;
             case Direction.DR:
             p.setX(p.getX()+1); // increase X position, increase Y to go lower right
             p.setY(p.getY()+1);
+            ll.add("DR");
             break;
             case Direction.DL:
             p.setX(p.getX()-1); // decrease X position, increase Y to go lower left
             p.setY(p.getY()+1);
+            ll.add("DL");
             break;
             case Direction.UL:
             p.setX(p.getX()-1); // decrease X position, decrease Y to go upper left
             p.setY(p.getY()-1);
+            ll.add("UL");
             break;
         }
 
+        if (isAWalk == true) {
+        for (String item : ll) {
+         outputFile.print(item); // add each item of the linked list to the file to show the full path
+         outputFile.flush();
+     }
+     outputFile.append("\n");
+     outputFile.close(); // close the stream
+ }
+    
     }
-     public static void randomMove(Block p) {
+     public static void randomMove(Block p, boolean isAWalk) {
 
-     	Random random = new Random(); // create a random Object
+     	Random random = new Random(); 
 
-		direction = random.nextInt(5); // select a random direction between 0 and 4 (no direction = 0, Up = 1, Down = 2, Left = 3, Right = 4)
+		direction = random.nextInt(5) + 1; // select a random direction between 0 and 4 (no direction = 0, Up = 1, Down = 2, Left = 3, Right = 4)
 
-        /*
-        Check whether the paths of Cheetah and Rabbit meet, if it's true then the Cheetah has caught the rabbit
-        */
+        if (isAWalk == true) {
+            try {
+        outputFile = new PrintWriter(new FileWriter("savedWalks.txt", true)); // set the where the walks will be added to
+        } catch (Exception e) {
+            // 
+        } 
+        moveDirection(p, isAWalk);
+        } else {
+        moveDirection(p, isAWalk);
+     
+        // check whether the Cheetah caught the rabbit
         if (RandomWalk.cheetah.getX() == RandomWalk.rabbit.getX() && RandomWalk.cheetah.getY() == RandomWalk.rabbit.getY()) {
         	System.out.println("Cheetah caught the rabbit!");
         	System.out.println("Setting new positions...");
@@ -86,110 +113,28 @@ class Direction {
           System.out.println(e);
         }
 
-       /*
-       If cheetah has caught the rabbit, reset their positions
-       to random coordinates on the grid
-       */
+       // reset positions to random if cheetah caught the rabbit
         RandomWalk.cheetah.setX(random.nextInt(19) + 1);
         RandomWalk.cheetah.setY(random.nextInt(19) + 1);
         RandomWalk.rabbit.setX(random.nextInt(19) + 1);
         RandomWalk.rabbit.setY(random.nextInt(19) + 1);
         }
-
-        moveDirection(p);
+    }
      }
-
-     public static void walkPath(Block p) {
-     	try {
-     	outputFile = new PrintWriter(new FileWriter("savedWalks.txt", true)); // set the where the walks will be added to
-        } catch (Exception e) {
-
-        }
-
-     	LinkedList<String> ll = new LinkedList<String>(); // create a new Linked List
-
-        Random random = new Random(); // create a new random object
-
-		direction = random.nextInt(5) + 1; // allow movement from 1 to 4 (Up, Down, Left, Right)
-
-        if (p.getY() < 2) {
-            direction = chooseDirection(2, 3, 4, 6, 7);
-        } else if (p.getY() > Grid.numBlockH - 2) {
-            direction = chooseDirection(1, 3, 4, 5, 8);
-        } else if (p.getX() > Grid.numBlockW - 2) {
-            direction = chooseDirection(1, 2, 3, 7, 8);
-        } else if (p.getX() < 1) {
-            direction = chooseDirection(1, 2, 4, 5, 6);
-        }
-
-     	switch (direction) {
-     		case Direction.U:
-            p.setY(p.getY()-1);
-            System.out.println("Adding U to the walk.");
-            ll.add("U"); // add 'U' as position to linked list
-     		break;
-     		case Direction.D:
-            p.setY(p.getY()+1);
-            System.out.println("Adding D to the walk.");
-            ll.add("D"); // add 'D' as position to linked list
-     		break;
-     		case Direction.L:
-            p.setX(p.getX()-1);
-            System.out.println("Adding L to the walk.");
-            ll.add("L"); // add 'L' as position to linked list
-     		break;
-     		case Direction.R:
-            p.setX(p.getX()+1);
-            System.out.println("Adding R to the walk.");
-            ll.add("R"); // add 'R' as position to linked list
-     		break;
-            case Direction.UR:
-            p.setX(p.getX()+1);
-            p.setY(p.getY()-1);
-            System.out.println("Adding UR to the walk.");
-            ll.add("UR"); // add 'UR' as position to linked list
-            break;
-            case Direction.DR:
-            p.setX(p.getX()+1);
-            p.setY(p.getY()+1);
-            System.out.println("Adding DR to the walk.");
-            ll.add("DR"); // add 'DR' as position to linked list
-            break;
-            case Direction.DL:
-            p.setX(p.getX()-1);
-            p.setY(p.getY()+1);
-            System.out.println("Adding DL to the walk.");
-            ll.add("DL"); // add 'DL' as position to linked list
-            break;
-            case Direction.UL:
-            p.setX(p.getX()-1);
-            p.setY(p.getY()-1);
-            System.out.println("Adding UL to the walk.");
-            ll.add("UL"); // add 'UL' as position to linked list
-            break;
-     	}
-
-     	for (String item : ll) {
-	     outputFile.print(item); // add each item of the linked list to the file to show the full path
-	     outputFile.flush();
-	 }
-	 outputFile.append("\n");
-	 outputFile.close(); // close the stream
-}
 
      public static int chooseDirection(int value1, int value2, int value3, int value4, int value5) {
             
             ArrayList<Integer> al = new ArrayList<Integer>(); // create a new arraylist
 
-            Random random = new Random(); // create a random object
-            al.add(value1); // add value to arraylist 
-            al.add(value2); // add value2 to arraylist
-            al.add(value3); // add value3 to arraylist
-            al.add(value4); // add value4 to arraylist
-            al.add(value5); // add value5 to arraylist
+            Random random = new Random();
+            al.add(value1); 
+            al.add(value2); 
+            al.add(value3); 
+            al.add(value4); 
+            al.add(value5); 
             direction = al.get(random.nextInt(al.size())); // select a random value (direction) from the elements in the arraylist
             al.clear(); // clear the arraylist 
 
-            return direction; // return the direction value (integer)
+            return direction;
      }
 }
