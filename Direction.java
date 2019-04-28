@@ -172,6 +172,88 @@ class Direction {
 	 outputFile.close(); // close the stream
 }
 
+public static void avoidCheetah(Block p) {
+
+     	Random random = new Random(); // create a random Object
+
+		direction = random.nextInt(5); // select a random direction between 0 and 4 (no direction = 0, Up = 1, Down = 2, Left = 3, Right = 4)
+
+        /*
+        Check whether the paths of Cheetah and Rabbit meet, if it's true then the Cheetah has caught the rabbit
+        */
+        if (RandomWalk.cheetah.getX() == RandomWalk.rabbit.getX() && RandomWalk.cheetah.getY() == RandomWalk.rabbit.getY()) {
+        	System.out.println("Cheetah caught the rabbit!");
+        	System.out.println("Setting new positions...");
+          try {
+          Thread.sleep(5000); // delay by 5 seocnds
+        } catch (Exception e) {
+          System.out.println(e);
+        }
+
+       /*
+       If cheetah has caught the rabbit, reset their positions
+       to random coordinates on the grid
+       */
+        RandomWalk.cheetah.setX(random.nextInt(19) + 1);
+        RandomWalk.cheetah.setY(random.nextInt(19) + 1);
+        RandomWalk.rabbit.setX(random.nextInt(19) + 1);
+        RandomWalk.rabbit.setY(random.nextInt(19) + 1);
+        } else if (RandomWalk.rabbit.getX() == RandomWalk.cheetah.getX() && RandomWalk.cheetah.getY() < RandomWalk.rabbit.getY()) {
+        	direction = 2;
+        	System.out.println("Rabbit moves down as he tries to avoid the Cheetah.");
+        } else if (RandomWalk.rabbit.getX() == RandomWalk.cheetah.getX() && RandomWalk.cheetah.getY() > RandomWalk.rabbit.getY()) {
+        	direction = 1;
+        	System.out.println("Rabbit moves up as he tries to avoid the Cheetah.");
+        } else if (RandomWalk.rabbit.getY() == RandomWalk.cheetah.getY() && RandomWalk.cheetah.getX() < RandomWalk.rabbit.getX()) {
+        	direction = 4;
+        	System.out.println("Rabbit moves right as he tries to avoid the Cheetah.");
+        } else if (RandomWalk.rabbit.getY() == RandomWalk.cheetah.getY() && RandomWalk.cheetah.getX() > RandomWalk.rabbit.getX()) {
+        	direction = 3;
+        	System.out.println("Rabbit moves left as he tries to avoid the Cheetah.");
+        }
+ 
+        if (p.getY() < 2) { // check whether the cheetah or the rabbit hit the upper wall
+            direction = chooseDirection(2, 3, 4, 6, 7); // set state to only allow direction Down, Left, Right, lower Right, lower Left
+        } else if (p.getY() > Grid.numBlockH - 2) { // check whether cheetah or rabbit hit south wall
+            direction = chooseDirection(1, 3, 4, 5, 8); // set state to only allow direction Up, Left, Right, upper Right, upper Left
+        } else if (p.getX() > Grid.numBlockW - 2) { // check whether cheetah or rabbit hit eastern wall
+            direction = chooseDirection(1, 2, 3, 7, 8); // set state to only allow direction Up, Down, Left, lower Left, upper Left
+        } else if (p.getX() < 1) { // check whether cheetah or rabbit hit western wall
+            direction = chooseDirection(1, 2, 4, 5, 6); // set state to only allow direction Up, Down, Right, upper Right, lower Right
+        }
+
+     	switch (direction) {
+     		case Direction.U:
+            p.setY(p.getY()-1); // decrease Y position if block is going up
+     		break;
+     		case Direction.D:
+            p.setY(p.getY()+1); // increase Y position if block is going up
+     		break;
+     		case Direction.L:
+            p.setX(p.getX()-1); // decrease X position if block is going left
+     		break;
+     		case Direction.R:
+            p.setX(p.getX()+1); // increase X position if block is going right
+     		break;
+            case Direction.UR:
+            p.setX(p.getX()+1); // increase X position, decrease Y to go upper right
+            p.setY(p.getY()-1);
+            break;
+            case Direction.DR:
+            p.setX(p.getX()+1); // increase X position, increase Y to go lower right
+            p.setY(p.getY()+1);
+            break;
+            case Direction.DL:
+            p.setX(p.getX()-1); // decrease X position, increase Y to go lower left
+            p.setY(p.getY()+1);
+            break;
+            case Direction.UL:
+            p.setX(p.getX()-1); // decrease X position, decrease Y to go upper left
+            p.setY(p.getY()-1);
+            break;
+     	}
+     }
+
      public static int chooseDirection(int value1, int value2, int value3, int value4, int value5) {
             
             ArrayList<Integer> al = new ArrayList<Integer>(); // create a new arraylist
