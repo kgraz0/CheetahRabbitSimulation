@@ -24,11 +24,55 @@ class Direction {
 	FileWriter fw = null; // set to null for now, but make it global
 	static PrintWriter outputFile;
 
+    public static void moveDirection(Block p) {
+
+        if (p.getY() < 2) { // check whether the cheetah or the rabbit hit the upper wall
+            direction = chooseDirection(2, 3, 4, 6, 7); // set state to only allow direction Down, Left, Right, lower Right, lower Left
+        } else if (p.getY() > Grid.numBlockH - 2) { // check whether cheetah or rabbit hit south wall
+            direction = chooseDirection(1, 3, 4, 5, 8); // set state to only allow direction Up, Left, Right, upper Right, upper Left
+        } else if (p.getX() > Grid.numBlockW - 2) { // check whether cheetah or rabbit hit eastern wall
+            direction = chooseDirection(1, 2, 3, 7, 8); // set state to only allow direction Up, Down, Left, lower Left, upper Left
+        } else if (p.getX() < 1) { // check whether cheetah or rabbit hit western wall
+            direction = chooseDirection(1, 2, 4, 5, 6); // set state to only allow direction Up, Down, Right, upper Right, lower Right
+        }
+
+        switch (direction) {
+            case Direction.U:
+            p.setY(p.getY()-1); // decrease Y position if block is going up
+            break;
+            case Direction.D:
+            p.setY(p.getY()+1); // increase Y position if block is going up
+            break;
+            case Direction.L:
+            p.setX(p.getX()-1); // decrease X position if block is going left
+            break;
+            case Direction.R:
+            p.setX(p.getX()+1); // increase X position if block is going right
+            break;
+            case Direction.UR:
+            p.setX(p.getX()+1); // increase X position, decrease Y to go upper right
+            p.setY(p.getY()-1);
+            break;
+            case Direction.DR:
+            p.setX(p.getX()+1); // increase X position, increase Y to go lower right
+            p.setY(p.getY()+1);
+            break;
+            case Direction.DL:
+            p.setX(p.getX()-1); // decrease X position, increase Y to go lower left
+            p.setY(p.getY()+1);
+            break;
+            case Direction.UL:
+            p.setX(p.getX()-1); // decrease X position, decrease Y to go upper left
+            p.setY(p.getY()-1);
+            break;
+        }
+
+    }
      public static void randomMove(Block p) {
 
      	Random random = new Random(); // create a random Object
 
-		direction = random.nextInt(5); // select a random direction between 0 and 4 (no direction = 0, Up = 1, Down = 2, Left = 3, Right = 4)
+		//direction = random.nextInt(5); // select a random direction between 0 and 4 (no direction = 0, Up = 1, Down = 2, Left = 3, Right = 4)
 
         /*
         Check whether the paths of Cheetah and Rabbit meet, if it's true then the Cheetah has caught the rabbit
@@ -51,47 +95,8 @@ class Direction {
         RandomWalk.rabbit.setX(random.nextInt(19) + 1);
         RandomWalk.rabbit.setY(random.nextInt(19) + 1);
         }
- 
-        if (p.getY() < 2) { // check whether the cheetah or the rabbit hit the upper wall
-            direction = chooseDirection(2, 3, 4, 6, 7); // set state to only allow direction Down, Left, Right, lower Right, lower Left
-        } else if (p.getY() > Grid.numBlockH - 2) { // check whether cheetah or rabbit hit south wall
-            direction = chooseDirection(1, 3, 4, 5, 8); // set state to only allow direction Up, Left, Right, upper Right, upper Left
-        } else if (p.getX() > Grid.numBlockW - 2) { // check whether cheetah or rabbit hit eastern wall
-            direction = chooseDirection(1, 2, 3, 7, 8); // set state to only allow direction Up, Down, Left, lower Left, upper Left
-        } else if (p.getX() < 1) { // check whether cheetah or rabbit hit western wall
-            direction = chooseDirection(1, 2, 4, 5, 6); // set state to only allow direction Up, Down, Right, upper Right, lower Right
-        }
 
-     	switch (direction) {
-     		case Direction.U:
-            p.setY(p.getY()-1); // decrease Y position if block is going up
-     		break;
-     		case Direction.D:
-            p.setY(p.getY()+1); // increase Y position if block is going up
-     		break;
-     		case Direction.L:
-            p.setX(p.getX()-1); // decrease X position if block is going left
-     		break;
-     		case Direction.R:
-            p.setX(p.getX()+1); // increase X position if block is going right
-     		break;
-            case Direction.UR:
-            p.setX(p.getX()+1); // increase X position, decrease Y to go upper right
-            p.setY(p.getY()-1);
-            break;
-            case Direction.DR:
-            p.setX(p.getX()+1); // increase X position, increase Y to go lower right
-            p.setY(p.getY()+1);
-            break;
-            case Direction.DL:
-            p.setX(p.getX()-1); // decrease X position, increase Y to go lower left
-            p.setY(p.getY()+1);
-            break;
-            case Direction.UL:
-            p.setX(p.getX()-1); // decrease X position, decrease Y to go upper left
-            p.setY(p.getY()-1);
-            break;
-     	}
+        moveDirection(p);
      }
 
      public static void walkPath(Block p) {
@@ -176,7 +181,7 @@ public static void avoidCheetah(Block p) {
 
      	Random random = new Random(); // create a random Object
 
-		direction = random.nextInt(5); // select a random direction between 0 and 4 (no direction = 0, Up = 1, Down = 2, Left = 3, Right = 4)
+		//direction = random.nextInt(5); // select a random direction between 0 and 4 (no direction = 0, Up = 1, Down = 2, Left = 3, Right = 4)
 
         /*
         Check whether the paths of Cheetah and Rabbit meet, if it's true then the Cheetah has caught the rabbit
@@ -211,47 +216,8 @@ public static void avoidCheetah(Block p) {
         	direction = 3;
         	System.out.println("Rabbit moves left as he tries to avoid the Cheetah.");
         }
- 
-        if (p.getY() < 2) { // check whether the cheetah or the rabbit hit the upper wall
-            direction = chooseDirection(2, 3, 4, 6, 7); // set state to only allow direction Down, Left, Right, lower Right, lower Left
-        } else if (p.getY() > Grid.numBlockH - 2) { // check whether cheetah or rabbit hit south wall
-            direction = chooseDirection(1, 3, 4, 5, 8); // set state to only allow direction Up, Left, Right, upper Right, upper Left
-        } else if (p.getX() > Grid.numBlockW - 2) { // check whether cheetah or rabbit hit eastern wall
-            direction = chooseDirection(1, 2, 3, 7, 8); // set state to only allow direction Up, Down, Left, lower Left, upper Left
-        } else if (p.getX() < 1) { // check whether cheetah or rabbit hit western wall
-            direction = chooseDirection(1, 2, 4, 5, 6); // set state to only allow direction Up, Down, Right, upper Right, lower Right
-        }
 
-     	switch (direction) {
-     		case Direction.U:
-            p.setY(p.getY()-1); // decrease Y position if block is going up
-     		break;
-     		case Direction.D:
-            p.setY(p.getY()+1); // increase Y position if block is going up
-     		break;
-     		case Direction.L:
-            p.setX(p.getX()-1); // decrease X position if block is going left
-     		break;
-     		case Direction.R:
-            p.setX(p.getX()+1); // increase X position if block is going right
-     		break;
-            case Direction.UR:
-            p.setX(p.getX()+1); // increase X position, decrease Y to go upper right
-            p.setY(p.getY()-1);
-            break;
-            case Direction.DR:
-            p.setX(p.getX()+1); // increase X position, increase Y to go lower right
-            p.setY(p.getY()+1);
-            break;
-            case Direction.DL:
-            p.setX(p.getX()-1); // decrease X position, increase Y to go lower left
-            p.setY(p.getY()+1);
-            break;
-            case Direction.UL:
-            p.setX(p.getX()-1); // decrease X position, decrease Y to go upper left
-            p.setY(p.getY()-1);
-            break;
-     	}
+        moveDirection(p);
      }
 
      public static int chooseDirection(int value1, int value2, int value3, int value4, int value5) {
