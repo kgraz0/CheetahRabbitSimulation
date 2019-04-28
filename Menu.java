@@ -10,7 +10,7 @@ public class Menu {
 	"\n Algorithms Coursework, Term II \n"+
 	"       by karolis-GRAZULIS \n \n"+
 	"\t********************************\n"+
-	"\t1. Random Movement \n"+
+	"\t1. Random Movement (Rabbit avoids Cheetah) \n"+
 	"\t2. Record a walk \n"+
 	"\t0. Exit \n"+
 	"\t********************************\n"+

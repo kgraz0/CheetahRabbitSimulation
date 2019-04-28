@@ -14,6 +14,10 @@ class Direction {
 	public static final int D = 2;
 	public static final int L = 3;
 	public static final int R = 4;
+    public static final int UR = 5;
+    public static final int DR = 6;
+    public static final int DL = 7;
+    public static final int UL = 8;
 	private static int direction = noDirection;
 
 	File myFile = null;; // set to null for now, but make it global
@@ -46,16 +50,16 @@ class Direction {
         RandomWalk.cheetah.setY(random.nextInt(19) + 1);
         RandomWalk.rabbit.setX(random.nextInt(19) + 1);
         RandomWalk.rabbit.setY(random.nextInt(19) + 1);
-        } 
-
+        }
+ 
         if (p.getY() < 2) { // check whether the cheetah or the rabbit hit the upper wall
-            direction = chooseDirection(2, 3, 4); // set state to only allow direction Down, Left, Right
+            direction = chooseDirection(2, 3, 4, 6, 7); // set state to only allow direction Down, Left, Right, lower Right, lower Left
         } else if (p.getY() > Grid.numBlockH - 2) { // check whether cheetah or rabbit hit south wall
-            direction = chooseDirection(1, 3, 4); // set state to only allow direction Up, Left, Right
+            direction = chooseDirection(1, 3, 4, 5, 8); // set state to only allow direction Up, Left, Right, upper Right, upper Left
         } else if (p.getX() > Grid.numBlockW - 2) { // check whether cheetah or rabbit hit eastern wall
-            direction = chooseDirection(1, 2, 3); // set state to only allow direction Up, Down, Left
+            direction = chooseDirection(1, 2, 3, 7, 8); // set state to only allow direction Up, Down, Left, lower Left, upper Left
         } else if (p.getX() < 1) { // check whether cheetah or rabbit hit western wall
-            direction = chooseDirection(1, 2, 4); // set state to only allow direction Up, Down, Right
+            direction = chooseDirection(1, 2, 4, 5, 6); // set state to only allow direction Up, Down, Right, upper Right, lower Right
         }
 
      	switch (direction) {
@@ -71,6 +75,22 @@ class Direction {
      		case Direction.R:
             p.setX(p.getX()+1); // increase X position if block is going right
      		break;
+            case Direction.UR:
+            p.setX(p.getX()+1); // increase X position, decrease Y to go upper right
+            p.setY(p.getY()-1);
+            break;
+            case Direction.DR:
+            p.setX(p.getX()+1); // increase X position, increase Y to go lower right
+            p.setY(p.getY()+1);
+            break;
+            case Direction.DL:
+            p.setX(p.getX()-1); // decrease X position, increase Y to go lower left
+            p.setY(p.getY()+1);
+            break;
+            case Direction.UL:
+            p.setX(p.getX()-1); // decrease X position, decrease Y to go upper left
+            p.setY(p.getY()-1);
+            break;
      	}
      }
 
@@ -88,13 +108,13 @@ class Direction {
 		direction = random.nextInt(5) + 1; // allow movement from 1 to 4 (Up, Down, Left, Right)
 
         if (p.getY() < 2) {
-            direction = chooseDirection(2, 3, 4);
+            direction = chooseDirection(2, 3, 4, 6, 7);
         } else if (p.getY() > Grid.numBlockH - 2) {
-            direction = chooseDirection(1, 3, 4);
+            direction = chooseDirection(1, 3, 4, 5, 8);
         } else if (p.getX() > Grid.numBlockW - 2) {
-            direction = chooseDirection(1, 2, 3);
+            direction = chooseDirection(1, 2, 3, 7, 8);
         } else if (p.getX() < 1) {
-            direction = chooseDirection(1, 2, 4);
+            direction = chooseDirection(1, 2, 4, 5, 6);
         }
 
      	switch (direction) {
@@ -118,6 +138,30 @@ class Direction {
             System.out.println("Adding R to the walk.");
             ll.add("R"); // add 'R' as position to linked list
      		break;
+            case Direction.UR:
+            p.setX(p.getX()+1);
+            p.setY(p.getY()-1);
+            System.out.println("Adding UR to the walk.");
+            ll.add("UR"); // add 'UR' as position to linked list
+            break;
+            case Direction.DR:
+            p.setX(p.getX()+1);
+            p.setY(p.getY()+1);
+            System.out.println("Adding DR to the walk.");
+            ll.add("DR"); // add 'DR' as position to linked list
+            break;
+            case Direction.DL:
+            p.setX(p.getX()-1);
+            p.setY(p.getY()+1);
+            System.out.println("Adding DL to the walk.");
+            ll.add("DL"); // add 'DL' as position to linked list
+            break;
+            case Direction.UL:
+            p.setX(p.getX()-1);
+            p.setY(p.getY()-1);
+            System.out.println("Adding UL to the walk.");
+            ll.add("UL"); // add 'UL' as position to linked list
+            break;
      	}
 
      	for (String item : ll) {
@@ -128,14 +172,16 @@ class Direction {
 	 outputFile.close(); // close the stream
 }
 
-     public static int chooseDirection(int value1, int value2, int value3) {
+     public static int chooseDirection(int value1, int value2, int value3, int value4, int value5) {
             
             ArrayList<Integer> al = new ArrayList<Integer>(); // create a new arraylist
 
             Random random = new Random(); // create a random object
             al.add(value1); // add value to arraylist 
             al.add(value2); // add value2 to arraylist
-            al.add(value3); // add value3 to arralyst
+            al.add(value3); // add value3 to arraylist
+            al.add(value4); // add value4 to arraylist
+            al.add(value5); // add value5 to arraylist
             direction = al.get(random.nextInt(al.size())); // select a random value (direction) from the elements in the arraylist
             al.clear(); // clear the arraylist 
 
