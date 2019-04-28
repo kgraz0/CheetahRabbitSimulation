@@ -72,7 +72,7 @@ class Direction {
 
      	Random random = new Random(); // create a random Object
 
-		//direction = random.nextInt(5); // select a random direction between 0 and 4 (no direction = 0, Up = 1, Down = 2, Left = 3, Right = 4)
+		direction = random.nextInt(5); // select a random direction between 0 and 4 (no direction = 0, Up = 1, Down = 2, Left = 3, Right = 4)
 
         /*
         Check whether the paths of Cheetah and Rabbit meet, if it's true then the Cheetah has caught the rabbit
@@ -176,49 +176,6 @@ class Direction {
 	 outputFile.append("\n");
 	 outputFile.close(); // close the stream
 }
-
-public static void avoidCheetah(Block p) {
-
-     	Random random = new Random(); // create a random Object
-
-		//direction = random.nextInt(5); // select a random direction between 0 and 4 (no direction = 0, Up = 1, Down = 2, Left = 3, Right = 4)
-
-        /*
-        Check whether the paths of Cheetah and Rabbit meet, if it's true then the Cheetah has caught the rabbit
-        */
-        if (RandomWalk.cheetah.getX() == RandomWalk.rabbit.getX() && RandomWalk.cheetah.getY() == RandomWalk.rabbit.getY()) {
-        	System.out.println("Cheetah caught the rabbit!");
-        	System.out.println("Setting new positions...");
-          try {
-          Thread.sleep(5000); // delay by 5 seocnds
-        } catch (Exception e) {
-          System.out.println(e);
-        }
-
-       /*
-       If cheetah has caught the rabbit, reset their positions
-       to random coordinates on the grid
-       */
-        RandomWalk.cheetah.setX(random.nextInt(19) + 1);
-        RandomWalk.cheetah.setY(random.nextInt(19) + 1);
-        RandomWalk.rabbit.setX(random.nextInt(19) + 1);
-        RandomWalk.rabbit.setY(random.nextInt(19) + 1);
-        } else if (RandomWalk.rabbit.getX() == RandomWalk.cheetah.getX() && RandomWalk.cheetah.getY() < RandomWalk.rabbit.getY()) {
-        	direction = 2;
-        	System.out.println("Rabbit moves down as he tries to avoid the Cheetah.");
-        } else if (RandomWalk.rabbit.getX() == RandomWalk.cheetah.getX() && RandomWalk.cheetah.getY() > RandomWalk.rabbit.getY()) {
-        	direction = 1;
-        	System.out.println("Rabbit moves up as he tries to avoid the Cheetah.");
-        } else if (RandomWalk.rabbit.getY() == RandomWalk.cheetah.getY() && RandomWalk.cheetah.getX() < RandomWalk.rabbit.getX()) {
-        	direction = 4;
-        	System.out.println("Rabbit moves right as he tries to avoid the Cheetah.");
-        } else if (RandomWalk.rabbit.getY() == RandomWalk.cheetah.getY() && RandomWalk.cheetah.getX() > RandomWalk.rabbit.getX()) {
-        	direction = 3;
-        	System.out.println("Rabbit moves left as he tries to avoid the Cheetah.");
-        }
-
-        moveDirection(p);
-     }
 
      public static int chooseDirection(int value1, int value2, int value3, int value4, int value5) {
             
