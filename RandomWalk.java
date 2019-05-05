@@ -33,8 +33,8 @@ class RandomWalk extends JFrame implements Runnable {
 	public void paint(Graphics g) {
 		globalGraphics = g.create(); // create a new Graphics object
 
-		cheetah = new Block(5, 3, 20, 20, false); // create a new Block for cheetah at x = 5, y = 3 and 20 pixels large
-		rabbit = new Block(15, 5, 20, 20, false); // create a new Block for rabbit at x = 15, y = 5 and 20 pixels large
+		cheetah = new Block(5, 3, 20, 20); // create a new Block for cheetah at x = 5, y = 3 and 20 pixels large
+		rabbit = new Block(15, 5, 20, 20); // create a new Block for rabbit at x = 15, y = 5 and 20 pixels large
 
 		if (runThread == null) {
 			runThread = new Thread(this); // create a new thread for this class
