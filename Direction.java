@@ -88,8 +88,6 @@ class Direction {
 
      	Random random = new Random(); 
 
-        direction = 4;
-
 		direction = random.nextInt(9) + 1; // select a random direction between 0 and 4 (no direction = 0, Up = 1, Down = 2, Left = 3, Right = 4)
 
         if (isAWalk == true) {
@@ -119,7 +117,7 @@ class Direction {
 
      public static int chooseDirection(int value1, int value2, int value3, int value4, int value5) {
             
-            ArrayList<Integer> al = new ArrayList<Integer>(); // create a new arraylist
+            ArrayList<Integer> al = new ArrayList<Integer>();
 
             Random random = new Random();
             al.add(value1); 
@@ -128,7 +126,7 @@ class Direction {
             al.add(value4); 
             al.add(value5); 
             direction = al.get(random.nextInt(al.size())); // select a random value (direction) from the elements in the arraylist
-            al.clear(); // clear the arraylist 
+            al.clear();
 
             return direction;
      }

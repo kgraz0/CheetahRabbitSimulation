@@ -4,11 +4,10 @@ import javax.swing.JFrame;
 
 class RandomWalk extends JFrame implements Runnable {
 
-	private Thread runThread; // use the Thread class
-	private Graphics globalGraphics; // use the Graphics class
-	public static Block cheetah, rabbit; // create cheetah and rabbit of Block class
+	private Thread runThread;
+	private Graphics globalGraphics; 
+	public static Block cheetah, rabbit;
 	
-
 	/*
 	This constructor:
 	- sets the title of the program
@@ -31,34 +30,34 @@ class RandomWalk extends JFrame implements Runnable {
 	}
 
 	public void paint(Graphics g) {
-		globalGraphics = g.create(); // create a new Graphics object
+		globalGraphics = g.create(); 
 
-		cheetah = new Block(5, 3, 20, 20); // create a new Block for cheetah at x = 5, y = 3 and 20 pixels large
-		rabbit = new Block(15, 5, 20, 20); // create a new Block for rabbit at x = 15, y = 5 and 20 pixels large
+		// x position, y position, pixel width, pixel height
+		cheetah = new Block(5, 3, 20, 20);
+		rabbit = new Block(15, 5, 20, 20);
 
 		if (runThread == null) {
-			runThread = new Thread(this); // create a new thread for this class
-			runThread.start(); // run the thread
+			runThread = new Thread(this);
+			runThread.start();
 		}
 	}
 
     public void draw(Graphics g) {
      	Grid.drawGrid(g); // draw the grid (two-dimensional) from the Grid class
-     	Cheetah.drawCheetah(g, cheetah); // draw the Cheetah image and its specified location
-     	Rabbit.drawRabbit(g, rabbit); // draw the Rabbit image and its specified location
+     	Cheetah.drawCheetah(g, cheetah);
+     	Rabbit.drawRabbit(g, rabbit);
      }
 
     public void run() {
      	while (true) {
-     		Direction.randomMove(cheetah, false); // call the movement function to allow for the cheetah to move U, D, L, R
-     		Direction.randomMove(rabbit, false); // call the movement function to allow for the rabbit to move U, D, L, R
-     		draw(globalGraphics); // draw all the items onto the frame
+     		Direction.randomMove(cheetah, false);
+     		Direction.randomMove(rabbit, false);
+     		draw(globalGraphics); 
 
      		try {
      			Thread.currentThread();
      			Thread.sleep(200); // set the speed of the movement
-
-     		} catch (Exception e) { // catch in case there is an exception
+     		} catch (Exception e) {
      			e.printStackTrace();
      		}
      	}

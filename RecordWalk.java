@@ -4,10 +4,10 @@ import javax.swing.JFrame;
 
 class RecordWalk extends JFrame implements Runnable {
 
-	private Thread runThread; // use the Thread class
-	private Graphics globalGraphics; // use the Graphics class
-	public static Block cheetah; // create the Block object for the cheetah
-	public static int length, posX, posY; // parameters for user input
+	private Thread runThread;
+	private Graphics globalGraphics;
+	public static Block cheetah;
+	public static int length, posX, posY;
 	
 
 	/*
@@ -37,19 +37,20 @@ class RecordWalk extends JFrame implements Runnable {
 	}
 
 	public void paint(Graphics g) {
-		globalGraphics = g.create(); // create a new Graphics object
+		globalGraphics = g.create();
 
-		cheetah = new Block(posX, posY, 20, 20); // create a Cheetah block at the given posX and posY positions
+		// x position, y position, pixel width, pixel height
+		cheetah = new Block(posX, posY, 20, 20);
 
 		if (runThread == null) {
-			runThread = new Thread(this); // create a new thread for this class
-			runThread.start(); // start the thread
+			runThread = new Thread(this);
+			runThread.start();
 		}
 	}
 
     public void draw(Graphics g) {
-     	Grid.drawGrid(g); // draw the grid 
-     	Cheetah.drawCheetah(g, cheetah); // draw the cheetah onto the frame
+     	Grid.drawGrid(g);
+     	Cheetah.drawCheetah(g, cheetah); 
      }
 
     public void run() {
@@ -58,15 +59,15 @@ class RecordWalk extends JFrame implements Runnable {
     	cheetah moves, which is the length of the walk, the
     	cheetah is given a random direction based on its location
     	*/
-     	for (int i = 0; i <= RecordWalk.length; i++) { // control the number of moves
+     	for (int i = 0; i <= RecordWalk.length; i++) {
 
-     		Direction.randomMove(cheetah, true); // allow the cheetah to move
+     		Direction.randomMove(cheetah, true);
      	
-     		draw(globalGraphics); // draw the Graphics onto the frame
+     		draw(globalGraphics);
 
      		try {
      			Thread.currentThread();
-     			Thread.sleep(200); // set the movement
+     			Thread.sleep(200); 
 
      		} catch (Exception e) {
      			e.printStackTrace();
@@ -75,8 +76,7 @@ class RecordWalk extends JFrame implements Runnable {
 System.out.println("Finished walk. Saving walk to file.");
         
 try {
-          Thread.sleep(2000); // delay the program by 2 seconds
-          System.exit(0); // exit the program
+          System.exit(0);
         } catch (Exception e) { // if there is an exception, just exit the program
           System.exit(0);
         }
