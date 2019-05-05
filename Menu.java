@@ -25,9 +25,9 @@ public class Menu {
 
 				switch(selected) {
 					case 0: System.exit(0);
-					case 1: q1(); // call q1 function
+					case 1: q1();
 					break;
-					case 2: q2(); // call q2 function
+					case 2: q2(); 
 					break;
 				}
 			} catch (Exception e) {
@@ -36,12 +36,12 @@ public class Menu {
 	}
 
 	public static void main(String[] args) {
-		new Menu(); // create a new Menu class object
+		new Menu();
 	}
 	
 
 	private void q1() {
-		new RandomWalk(); // create a new RandomWalk class object
+		new RandomWalk();
 	}
 
 	private static void q2() {
@@ -83,6 +83,6 @@ public class Menu {
         }
     } while (userInput < minLimit || userInput > maxLimit);
 
-    return userInput; // return the value that user entered
+    return userInput;
 	}
 }
