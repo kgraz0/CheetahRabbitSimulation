@@ -84,7 +84,7 @@ class Direction {
 
      	Random random = new Random(); 
 
-		direction = random.nextInt(9) + 1; // select a random direction between 0 and 4 (no direction = 0, Up = 1, Down = 2, Left = 3, Right = 4)
+		direction = random.nextInt(8) + 1; // select a random direction between 0 and 4 (no direction = 0, Up = 1, Down = 2, Left = 3, Right = 4)
 
         if (isAWalk == true) {
             try {
