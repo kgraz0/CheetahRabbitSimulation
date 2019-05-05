@@ -4,11 +4,11 @@ import java.awt.Color;
 
 public class Grid {
 
-     private static ArrayList<Block> grid; // create a new ArrayList that contains Blocks
-     public static int x = 0, y = 0, blockWidth = 25, blockHeight = 25, numBlockW = 20, numBlockH = 20; // block parameters
+     private static ArrayList<Block> grid; 
+     public static int x = 0, y = 0, blockWidth = 25, blockHeight = 25, numBlockW = 20, numBlockH = 20;
 
      public Grid() {
-          grid = generateGrid(); // generate a grid upon the constructor call
+          grid = generateGrid();
      }
 
      /*
@@ -21,19 +21,19 @@ public class Grid {
      ArrayList<Block> blockAL = new ArrayList<Block>();
 
      for (int i = 0; i < numBlockW; i++) {
-          for (int j = 0; j < numBlockH; j++) { //two for loops for two-dimensional array as a grid needs to be filled
-               Block b = new Block(x, y, blockWidth, blockHeight, false); // create a new Block object with the given parameters
-               blockAL.add(b); // add the new Block object to the Arraylist
-               x += blockWidth; // increase the x position so after one block another block can be created and be seperated
+          for (int j = 0; j < numBlockH; j++) { 
+               Block b = new Block(x, y, blockWidth, blockHeight); 
+               blockAL.add(b); 
+               x += blockWidth; 
           }
           x = 0; 
-          y += blockHeight; // increase the y position so blocks can fit into a grid
+          y += blockHeight;
      }
-     return new ArrayList<Block>(blockAL); // return the ArrayList full of new Block objects
+     return new ArrayList<Block>(blockAL); 
 }
 
      public static void drawGrid(Graphics g) {
-         for (Block b : grid) { // for each Block object, call the drawBlock function and draw it onto the screen as Graphics
+         for (Block b : grid) { 
           drawBlock(g, b.getX(), b.getY(), b.getWidth(), b.getHeight(), Color.WHITE, Color.BLACK);
 }
 }
@@ -42,7 +42,7 @@ public class Grid {
      This function draws a rectangle at specified x and y coordinates and the box is given its own height, width,
      fill colour and outline colour. This function is to draw each individual block. 
      */
-     private static void drawBlock( Graphics g, int newX, int newY, int newWidth, int newHeight, Color newFill, Color newOutline ) {
+     private static void drawBlock(Graphics g, int newX, int newY, int newWidth, int newHeight, Color newFill, Color newOutline ) {
           g.setColor(newFill);
           g.fillRect(newX, newY, newWidth, newHeight); 
           g.setColor(newOutline );
