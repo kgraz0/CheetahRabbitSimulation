@@ -9,7 +9,6 @@ class RecordWalk extends JFrame implements Runnable {
 	public static Block cheetah;
 	public static int length, posX, posY;
 	
-
 	/*
 	recordWalk constructor takes in the walk length, the starting position X,
 	starting position Y that the user enters and then calls the constructor.
@@ -59,7 +58,8 @@ class RecordWalk extends JFrame implements Runnable {
     	cheetah moves, which is the length of the walk, the
     	cheetah is given a random direction based on its location
     	*/
-     	for (int i = 0; i <= RecordWalk.length; i++) {
+
+     	for (int i = 0; i <= RecordWalk.length-1; i++) {
 
      		Direction.randomMove(cheetah, true);
      	
@@ -68,17 +68,12 @@ class RecordWalk extends JFrame implements Runnable {
      		try {
      			Thread.currentThread();
      			Thread.sleep(200); 
-
      		} catch (Exception e) {
      			e.printStackTrace();
      	}
      }
 System.out.println("Finished walk. Saving walk to file.");
-        
-try {
-          System.exit(0);
-        } catch (Exception e) { // if there is an exception, just exit the program
-          System.exit(0);
-        }
+
+System.exit(0);
 }
 }
