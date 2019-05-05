@@ -1,10 +1,6 @@
 import java.util.Random;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.util.LinkedList;
 import java.io.PrintWriter;
 
 class Direction {
