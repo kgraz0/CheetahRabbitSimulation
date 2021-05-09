@@ -8,4 +8,4 @@ Make sure that the environment you are using supports user input (such as CMD) a
 The game simulates two automated players, Cheetah and Rabbit, on a 2D grid with Up, Down, Left, Right or diagonal movements.
 
 Upon running, you are presented with a menu:
-![Selection menu](https://github.com/kgraz0/CheetahRabbitSimulation/blob/master/READMEimages/menuSelection.png?raw=true)
+![Selection menu](READMEfiles/menuSelection.png)
